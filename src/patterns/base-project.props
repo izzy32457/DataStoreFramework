@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project>
+
+    <PropertyGroup>
+        <TargetFramework Condition="'$(TargetFramework)' == ''">net5.0</TargetFramework>
+	    <Configurations>Debug;Release</Configurations>
+        <NeutralLanguage>en-GB</NeutralLanguage>
+    </PropertyGroup>
+
+    <!-- Set assembly properties -->
+    <PropertyGroup>
+        <Company Condition="'$(Company)' == ''">Sidrat International</Company>
+        <Copyright Condition="'$(Copyright)' == ''">Copyright � 2021 $(Company)</Copyright>
+
+        <RepositoryType Condition="'$(RepositoryType)' == ''">git</RepositoryType>
+        <RepositoryUrl Condition="'$(RepositoryUrl)' == ''">git@github.com:izzy32457/DataStoreFramework.git</RepositoryUrl>
+
+        <Authors Condition="'$(Authors)' == ''">$(Company)</Authors>
+    </PropertyGroup>
+
+    <!-- Enable static analysis -->
+    <PropertyGroup>
+        <EnableNETAnalyzers>true</EnableNETAnalyzers>
+        <AnalysisLevel Condition="'$(AnalysisLevel)' == ''">latest</AnalysisLevel>
+        <AnalysisMode Condition="'$(AnalysisMode)' == ''">AllEnabledByDefault</AnalysisMode>
+        <EnforceCodeStyleInBuild Condition="'$(EnforceCodeStyleInBuild)' == ''">true</EnforceCodeStyleInBuild>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="SecurityCodeScan" Version="3.5.3">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="IDisposableAnalyzers" Version="3.4.6">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+    </ItemGroup>
+
+    <!-- Enable documentation generation -->
+    <PropertyGroup>
+        <GenerateDocumentationFile Condition="'$(GenerateDocumentationFile)' == ''">true</GenerateDocumentationFile>
+    </PropertyGroup>
+
+</Project>

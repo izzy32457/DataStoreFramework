@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Project>
+	<Import Project="base-project.props" />
+
+	<PropertyGroup>
+        <SignAssembly>true</SignAssembly>
+		<AssemblyOriginatorKeyFile>$(SolutionDir)Sidrat-DFS.snk</AssemblyOriginatorKeyFile>
+	</PropertyGroup>
+
+	<!-- Include JetBrains Annotations -->
+	<ItemGroup>
+		<PackageReference Include="Fody" Version="6.5.2">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="JetBrains.Annotations" Version="2021.2.0" />
+		<PackageReference Include="JetBrainsAnnotations.Fody" Version="2.17.0">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; compile; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
+</Project>
