@@ -1,6 +1,7 @@
 ﻿using System;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace DataStoreFramework.Providers
 {
@@ -20,7 +21,7 @@ namespace DataStoreFramework.Providers
             [NotNull] this IServiceCollection services,
             [CanBeNull] Action<TDataStoreOptionsBuilder> builder)
             where TDataStore : class, IDataStoreProvider
-            where TDataStoreOptionsBuilder : DataStoreProviderOptionsBuilder<TDataStoreOptions>, new()
+            where TDataStoreOptionsBuilder : IDataStoreProviderOptionsBuilder<TDataStoreOptions>, new()
             where TDataStoreOptions : DataStoreProviderOptions
         {
             var optionsBuilder = new TDataStoreOptionsBuilder();
@@ -28,10 +29,10 @@ namespace DataStoreFramework.Providers
 
             var options = optionsBuilder.Build();
 
-            return services
-                .AddSingleton(options)
-                .AddScoped<IDataStoreProvider, TDataStore>()
-                ;
+            services.TryAddSingleton(options);
+            services.TryAddScoped<IDataStoreProvider, TDataStore>();
+
+            return services;
         }
     }
 }

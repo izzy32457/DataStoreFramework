@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<Import Project="..\..\patterns\shared-library.props" />
+
+	<ItemGroup>
+	  <ProjectReference Include="..\DataStoreFramework.Abstractions\DataStoreFramework.Abstractions.csproj" />
+	</ItemGroup>
+
+</Project>

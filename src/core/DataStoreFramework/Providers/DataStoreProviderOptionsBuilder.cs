@@ -1,19 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
 
 namespace DataStoreFramework.Providers
 {
     /// <summary>Provides a read and write builder to create and instance of the required <see cref="DataStoreProviderOptions"/>.</summary>
-    /// <typeparam name="TProviderOptions">The type of the required <see cref="DataStoreProviderOptions"/>.</typeparam>
     [PublicAPI]
-    public abstract class DataStoreProviderOptionsBuilder<TProviderOptions>
-        where TProviderOptions : DataStoreProviderOptions
+    public abstract class DataStoreProviderOptionsBuilder
     {
         private readonly Dictionary<string, object> _options;
 
-        /// <summary>Initializes a new instance of the <see cref="DataStoreProviderOptionsBuilder{TProviderOptions}"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="DataStoreProviderOptionsBuilder"/> class.</summary>
         protected DataStoreProviderOptionsBuilder()
         {
             _options = new ();
@@ -24,7 +21,7 @@ namespace DataStoreFramework.Providers
         /// <param name="name">The name of the option.</param>
         /// <param name="value">The value to set for the option.</param>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="name"/> is <see langword="null"/>.</exception>
-        public void SetOption<T>([CallerMemberName][NotNull] string name = null!, T value = default)
+        protected void SetOption<T>([NotNull] string name, [CanBeNull] T value)
         {
             if (name is null)
             {
@@ -40,9 +37,5 @@ namespace DataStoreFramework.Providers
                 _options[name] = value;
             }
         }
-
-        /// <summary>Builds an instance of the required <typeparamref name="TProviderOptions"/>.</summary>
-        /// <returns>An instance of <typeparamref name="TProviderOptions"/> with all configured options set.</returns>
-        public abstract TProviderOptions Build();
     }
 }
