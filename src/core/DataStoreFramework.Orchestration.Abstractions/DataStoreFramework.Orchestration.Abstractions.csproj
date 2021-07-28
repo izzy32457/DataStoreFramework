@@ -2,6 +2,10 @@
 
 	<Import Project="..\..\patterns\shared-library.props" />
 
+	<PropertyGroup>
+		<RootNamespace>DataStoreFramework.Orchestration</RootNamespace>
+	</PropertyGroup>
+
 	<ItemGroup>
 	  <ProjectReference Include="..\DataStoreFramework.Abstractions\DataStoreFramework.Abstractions.csproj" />
 	</ItemGroup>

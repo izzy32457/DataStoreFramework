@@ -8,26 +8,26 @@ namespace DataStoreFramework.Providers
     /// <summary>A base class that defines the common Data Store Provider configuration options.</summary>
     /// <remarks>This should be inherited by each provider specific implementation.</remarks>
     [PublicAPI]
-    public abstract class DataStoreProviderOptions
+    public abstract class ProviderOptions
     {
         private readonly Dictionary<string, object> _options;
 
-        /// <summary>Initializes a new instance of the <see cref="DataStoreProviderOptions"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="ProviderOptions"/> class.</summary>
         /// <param name="options">An already defined set of options for initialization.</param>
-        internal DataStoreProviderOptions([NotNull] Dictionary<string, object> options)
+        protected ProviderOptions([NotNull] Dictionary<string, object> options)
         {
             _options = options;
         }
 
-        /// <summary>Initializes a new instance of the <see cref="DataStoreProviderOptions"/> class.</summary>
-        protected DataStoreProviderOptions()
+        /// <summary>Initializes a new instance of the <see cref="ProviderOptions"/> class.</summary>
+        protected ProviderOptions()
         {
             _options = new ();
         }
 
         /// <summary>Gets the Data Store Provider identifier.</summary>
         /// <remarks>This is used when orchestration multiple Data Stores.</remarks>
-        [NotNull]
+        [CanBeNull]
         public string Identifier
         {
             get => GetOption<string>();

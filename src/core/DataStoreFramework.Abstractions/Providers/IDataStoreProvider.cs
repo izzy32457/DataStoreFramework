@@ -49,7 +49,7 @@ namespace DataStoreFramework.Providers
         /// <exception cref="Exceptions.ObjectException">Thrown when the provider is in a disconnected state.</exception>
         void Write([NotNull] string objectPath, [NotNull] Stream data);
 
-        /// <summary>Begins as chunked data upload.</summary>
+        /// <summary>Begins a chunked data upload.</summary>
         /// <param name="objectPath">An object path that specifies where the required data object is located.</param>
         /// <returns>An identifier to enable uploading multiple chunks.</returns>
         /// <remarks>This process should be used to ensure data uploads for large content will not timeout or fail due to request size limitations.</remarks>
@@ -90,14 +90,14 @@ namespace DataStoreFramework.Providers
         /// <summary>Copies a given data object from one location in to another location within the same Provider / Data Store.</summary>
         /// <param name="sourceObjectPath">An object path that specifies where the source data object is located.</param>
         /// <param name="destinationObjectPath">An object path that defines where the data object should be copied to.</param>
-        /// <exception cref="Exceptions.ObjectNotFoundException">Thrown when the specified <paramref name="sourceObjectPath"/> doesn't exist.</exception>
+        /// <exception cref="Exceptions.ObjectNotFoundException">Thrown when the specified <paramref name="sourceObjectPath"/> or <paramref name="destinationObjectPath"/> don't exist.</exception>
         /// <exception cref="Exceptions.ObjectException">Thrown when the provider is in a disconnected state.</exception>
         void Copy([NotNull] string sourceObjectPath, [NotNull] string destinationObjectPath);
 
         /// <summary>Moves a given data object from one location to another within the same Provider / Data Store.</summary>
         /// <param name="sourceObjectPath">An object path that specifies where the source data object is located.</param>
         /// <param name="destinationObjectPath">An object path that defines where the data object should be moved to.</param>
-        /// <exception cref="Exceptions.ObjectNotFoundException">Thrown when the specified <paramref name="sourceObjectPath"/> doesn't exist.</exception>
+        /// <exception cref="Exceptions.ObjectNotFoundException">Thrown when the specified <paramref name="sourceObjectPath"/> or <paramref name="destinationObjectPath"/> don't exist.</exception>
         /// <exception cref="Exceptions.ObjectException">Thrown when the provider is in a disconnected state.</exception>
         void Move([NotNull] string sourceObjectPath, [NotNull] string destinationObjectPath);
     }
