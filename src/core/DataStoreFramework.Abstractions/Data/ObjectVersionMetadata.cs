@@ -1,33 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Net.Mime;
 using System.Security.Cryptography;
 using JetBrains.Annotations;
 
 namespace DataStoreFramework.Data
 {
+    /// <summary>Provides version metadata for a given data object.</summary>
+    /// <remarks>This doesn't include details of location changes. For that information the Provider must be configured for "Auditing".</remarks>
     [PublicAPI]
     public class ObjectVersionMetadata
     {
-        [Key]
+        /// <summary>Gets the identifier for the data object version.</summary>
+        [NotNull]
         [Required]
-        public string Key { get; set; }
+        public string VersionId { get; init; } = null!;
 
+        /// <summary>Gets the date the data object version was created.</summary>
         [Required]
-        [DefaultValue(MediaTypeNames.Application.Octet)]
-        public string MimeType { get; set; } = MediaTypeNames.Application.Octet;
+        public DateTimeOffset CreatedDate { get; init; }
 
+        /// <summary>Gets the numerical order of the version in relation to other versions.</summary>
+        [NonNegativeValue]
+        public int SortOrder { get; init; }
+
+        /// <summary>Gets a collection of hash details that can be used to validate the data object content.</summary>
+        [NotNull]
         [Required]
-        public DateTimeOffset CreatedDate { get; set; }
-
-        [Required]
-        public string VersionId { get; set; }
-
-        public int SortOrder { get; set; }
-
-        [Required]
-        public Dictionary<HashAlgorithmName, string> Hashes { get; set; }
+        public Dictionary<HashAlgorithmName, string> Hashes { get; init; } = new ();
     }
 }
