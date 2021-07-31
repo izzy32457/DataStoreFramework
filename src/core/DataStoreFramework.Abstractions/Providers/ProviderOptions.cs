@@ -42,6 +42,19 @@ namespace DataStoreFramework.Providers
             init => SetOption(value: value);
         }
 
+        /// <summary>Determines if a specified option has been set.</summary>
+        /// <param name="name">The name of the option.</param>
+        /// <returns><see langword="true"/> if the option has been specified, otherwise <see langword="false"/>.</returns>
+        public bool HasOption([NotNull] string name)
+        {
+            if (name is null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
+            return _options.ContainsKey(name);
+        }
+
         /// <summary>Gets a named option for the derived Provider Options instance.</summary>
         /// <typeparam name="T">The type of the option value.</typeparam>
         /// <param name="name">The name of the option.</param>
@@ -55,7 +68,7 @@ namespace DataStoreFramework.Providers
                 throw new ArgumentNullException(nameof(name));
             }
 
-            return _options.ContainsKey(name) ?
+            return HasOption(name) ?
                 (T)_options[name] :
                 throw new InvalidOperationException($"No value has be set for the option '{name}'.");
         }
@@ -72,7 +85,7 @@ namespace DataStoreFramework.Providers
                 throw new ArgumentNullException(nameof(name));
             }
 
-            if (!_options.ContainsKey(name))
+            if (!HasOption(name))
             {
                 _options.Add(name, value);
             }

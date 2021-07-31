@@ -8,7 +8,7 @@ namespace DataStoreFramework.Providers
     public static class ProviderOptionsBuilderExtensions
     {
         /// <summary>Sets the name / identifier for the Data Store Provider instance.</summary>
-        /// <typeparam name="TOptionsBuilder">The specific type of the Provider Options Builder</typeparam>
+        /// <typeparam name="TOptionsBuilder">The specific type of the Provider Options Builder.</typeparam>
         /// <param name="builder">The Provider Options Builder instance to configure.</param>
         /// <param name="name">The name to use for the Data Store Provider instance.</param>
         /// <returns>The <paramref name="builder"/> instance with the Identifier set.</returns>
@@ -26,7 +26,7 @@ namespace DataStoreFramework.Providers
         }
 
         /// <summary>Sets the maximum Data Object upload size before requiring chunked upload process.</summary>
-        /// <typeparam name="TOptionsBuilder">The specific type of the Provider Options Builder</typeparam>
+        /// <typeparam name="TOptionsBuilder">The specific type of the Provider Options Builder.</typeparam>
         /// <param name="builder">The Provider Options Builder instance to configure.</param>
         /// <param name="maximumPartSize">The maximum part size.</param>
         /// <returns>The <paramref name="builder"/> instance with the MaxDataPartSize set.</returns>

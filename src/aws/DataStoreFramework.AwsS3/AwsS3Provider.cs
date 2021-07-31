@@ -7,13 +7,20 @@ using Microsoft.Extensions.Logging;
 
 namespace DataStoreFramework.AwsS3
 {
+    /// <summary>Provides the Data Store Provider implementation for AWS S3.</summary>
+    [PublicAPI]
     public class AwsS3Provider : IDataStoreProvider
     {
+        [NotNull]
         private readonly ILogger<AwsS3Provider> _logger;
 
+        [NotNull]
         private readonly AwsS3ProviderOptions _options;
 
-        public AwsS3Provider(ILogger<AwsS3Provider> logger, AwsS3ProviderOptions options)
+        /// <summary>Initializes a new instance of the <see cref="AwsS3Provider"/> class.</summary>
+        /// <param name="logger">A logger.</param>
+        /// <param name="options">A set of options to configure the provider instance.</param>
+        public AwsS3Provider([NotNull] ILogger<AwsS3Provider> logger, [NotNull] AwsS3ProviderOptions options)
         {
             _logger = logger;
             _options = options;
@@ -25,6 +32,10 @@ namespace DataStoreFramework.AwsS3
         /// <inheritdoc/>
         public bool CanAccessObject(string objectPath)
         {
+            _logger.LogDebug($"Starting CanAccessObject: '{objectPath}'");
+
+            using var client = _options.GetClient();
+
             throw new System.NotImplementedException();
         }
 

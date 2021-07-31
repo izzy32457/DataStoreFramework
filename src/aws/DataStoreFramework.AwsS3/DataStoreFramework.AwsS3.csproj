@@ -3,6 +3,7 @@
 	<Import Project="..\..\patterns\shared-library.props" />
 
 	<ItemGroup>
+	  <PackageReference Include="AWSSDK.S3" Version="3.7.1.19" />
 	  <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0" />
 	</ItemGroup>
 

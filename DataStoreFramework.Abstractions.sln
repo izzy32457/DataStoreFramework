@@ -35,11 +35,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "examples", "examples", "{79
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SingleStoreApi", "SingleStoreApi", "{781EC3B1-6C4D-4D62-B558-4DE14D044816}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SingleDataStoreApi", "examples\SingleStoreApi\SingleDataStoreApi\SingleDataStoreApi.csproj", "{F68BA1B3-C671-4312-86FE-90C60167E3FD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SingleDataStoreApi", "examples\SingleStoreApi\SingleDataStoreApi\SingleDataStoreApi.csproj", "{F68BA1B3-C671-4312-86FE-90C60167E3FD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataStoreFramework.AwsS3", "src\aws\DataStoreFramework.AwsS3\DataStoreFramework.AwsS3.csproj", "{0BD023CE-5F48-4D59-A903-658446AC33DA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataStoreFramework.AwsS3", "src\aws\DataStoreFramework.AwsS3\DataStoreFramework.AwsS3.csproj", "{0BD023CE-5F48-4D59-A903-658446AC33DA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataStoreFramework.Orchestration.Abstractions", "src\core\DataStoreFramework.Orchestration.Abstractions\DataStoreFramework.Orchestration.Abstractions.csproj", "{28CECFE5-FC08-475C-BEED-7F2CC5A6A37A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataStoreFramework.Orchestration.Abstractions", "src\core\DataStoreFramework.Orchestration.Abstractions\DataStoreFramework.Orchestration.Abstractions.csproj", "{28CECFE5-FC08-475C-BEED-7F2CC5A6A37A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataStoreFramework.Orchestration.Configuration.Static", "src\core\DataStoreFramework.Orchestration.Configuration.Static\DataStoreFramework.Orchestration.Configuration.Static.csproj", "{99B3176F-196E-4FCE-BA8B-8CF521627E2A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StaticOrchestrationApi", "StaticOrchestrationApi", "{128606C3-E8D1-4478-B8BA-DBB7B67CFDB0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StaticOrchestrationApi", "examples\StaticOrchestrationApi\StaticOrchestrationApi\StaticOrchestrationApi.csproj", "{5986D73D-3D1A-43B7-82E6-0AFBA20B06C7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataStoreFramework.Orchestration", "src\core\DataStoreFramework.Orchestration\DataStoreFramework.Orchestration.csproj", "{361BA287-9F71-41F4-9DAC-0FD6E14D47A4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataStoreFramework.AwsS3.Orchestration", "src\aws\DataStoreFramework.AwsS3.Orchestration\DataStoreFramework.AwsS3.Orchestration.csproj", "{C21CADFA-B61D-4B5D-9F37-4A31816984D1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +73,22 @@ Global
 		{28CECFE5-FC08-475C-BEED-7F2CC5A6A37A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{28CECFE5-FC08-475C-BEED-7F2CC5A6A37A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{28CECFE5-FC08-475C-BEED-7F2CC5A6A37A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99B3176F-196E-4FCE-BA8B-8CF521627E2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99B3176F-196E-4FCE-BA8B-8CF521627E2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99B3176F-196E-4FCE-BA8B-8CF521627E2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99B3176F-196E-4FCE-BA8B-8CF521627E2A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5986D73D-3D1A-43B7-82E6-0AFBA20B06C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5986D73D-3D1A-43B7-82E6-0AFBA20B06C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5986D73D-3D1A-43B7-82E6-0AFBA20B06C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5986D73D-3D1A-43B7-82E6-0AFBA20B06C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{361BA287-9F71-41F4-9DAC-0FD6E14D47A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{361BA287-9F71-41F4-9DAC-0FD6E14D47A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{361BA287-9F71-41F4-9DAC-0FD6E14D47A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{361BA287-9F71-41F4-9DAC-0FD6E14D47A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C21CADFA-B61D-4B5D-9F37-4A31816984D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C21CADFA-B61D-4B5D-9F37-4A31816984D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C21CADFA-B61D-4B5D-9F37-4A31816984D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C21CADFA-B61D-4B5D-9F37-4A31816984D1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -78,6 +104,11 @@ Global
 		{F68BA1B3-C671-4312-86FE-90C60167E3FD} = {781EC3B1-6C4D-4D62-B558-4DE14D044816}
 		{0BD023CE-5F48-4D59-A903-658446AC33DA} = {5CEB7816-002C-4213-96EE-77C205518E75}
 		{28CECFE5-FC08-475C-BEED-7F2CC5A6A37A} = {DB5C8D27-20C0-4437-AD6A-11660DD47050}
+		{99B3176F-196E-4FCE-BA8B-8CF521627E2A} = {DB5C8D27-20C0-4437-AD6A-11660DD47050}
+		{128606C3-E8D1-4478-B8BA-DBB7B67CFDB0} = {792CAB7C-802E-46AE-A03C-C1254F158A32}
+		{5986D73D-3D1A-43B7-82E6-0AFBA20B06C7} = {128606C3-E8D1-4478-B8BA-DBB7B67CFDB0}
+		{361BA287-9F71-41F4-9DAC-0FD6E14D47A4} = {DB5C8D27-20C0-4437-AD6A-11660DD47050}
+		{C21CADFA-B61D-4B5D-9F37-4A31816984D1} = {5CEB7816-002C-4213-96EE-77C205518E75}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AFE9503C-F3F2-49D2-BC27-8F233CAFDBE7}

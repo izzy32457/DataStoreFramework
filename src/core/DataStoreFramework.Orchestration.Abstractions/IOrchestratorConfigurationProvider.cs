@@ -1,17 +1,24 @@
-﻿using System;
-using DataStoreFramework.Providers;
-using Microsoft.Extensions.DependencyInjection;
+﻿using DataStoreFramework.Providers;
+using JetBrains.Annotations;
 
 namespace DataStoreFramework.Orchestration
 {
+    /// <summary>Defines the requirements for an Orchestrator Configuration provider.</summary>
+    [PublicAPI]
     public interface IOrchestratorConfigurationProvider
     {
-        // TODO: provide crud for registering Data Store Providers
+        /// <summary>Retrieves an instance of a registered provider by it's registered identifier.</summary>
+        /// <param name="name">The name of the required provider.</param>
+        /// <returns>An instance of the specified Data Store Provider.</returns>
+        /// <exception cref="Exceptions.ProviderNotFoundException">Thrown if no provider is found with the specified <paramref name="name"/>.</exception>
+        [NotNull]
+        IDataStoreProvider GetDataStoreByName([NotNull] string name);
 
-        /// <summary>Adds a new data store provider to be managed.</summary>
-        /// <param name="dataStoreType">The type of the provider.</param>
-        /// <param name="options">The options to create a provider instance.</param>
-        /// <param name="lifetime">The lifetime of the provider.</param>
-        void AddDataStore(Type dataStoreType, ProviderOptions options, ServiceLifetime lifetime = ServiceLifetime.Singleton);
+        /// <summary>Retrieves an instance of a registered provider by it's registered identifier.</summary>
+        /// <param name="objectPath">The path for an object stored in the required provider.</param>
+        /// <returns>An instance of the specified Data Store Provider.</returns>
+        /// <exception cref="Exceptions.ProviderNotFoundException">Thrown if no provider is found that supports the specified <paramref name="objectPath"/>.</exception>
+        [NotNull]
+        IDataStoreProvider GetDataStoreByObjectPath([NotNull] string objectPath);
     }
 }
