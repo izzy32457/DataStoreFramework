@@ -10,7 +10,7 @@
     <!-- Set assembly properties -->
     <PropertyGroup>
         <Company Condition="'$(Company)' == ''">Sidrat International</Company>
-        <Copyright Condition="'$(Copyright)' == ''">Copyright � 2021 $(Company)</Copyright>
+        <Copyright Condition="'$(Copyright)' == ''">Copyright © 2021 $(Company)</Copyright>
 
         <RepositoryType Condition="'$(RepositoryType)' == ''">git</RepositoryType>
         <RepositoryUrl Condition="'$(RepositoryUrl)' == ''">git@github.com:izzy32457/DataStoreFramework.git</RepositoryUrl>
