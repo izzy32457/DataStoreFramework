@@ -23,9 +23,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "local", "local", "{CD826F96
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1935BB8A-7317-4705-8BE0-920557B11C96}"
 	ProjectSection(SolutionItems) = preProject
+		.dockerignore = .dockerignore
 		.editorconfig = .editorconfig
 		.gitignore = .gitignore
+		CODEOWNERS = CODEOWNERS
 		LICENSE = LICENSE
+		NuGet.Config = NuGet.Config
 		README.md = README.md
 		Sidrat-DFS.snk = Sidrat-DFS.snk
 		stylecop.json = stylecop.json
@@ -49,7 +52,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StaticOrchestrationApi", "e
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataStoreFramework.Orchestration", "src\core\DataStoreFramework.Orchestration\DataStoreFramework.Orchestration.csproj", "{361BA287-9F71-41F4-9DAC-0FD6E14D47A4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataStoreFramework.AwsS3.Orchestration", "src\aws\DataStoreFramework.AwsS3.Orchestration\DataStoreFramework.AwsS3.Orchestration.csproj", "{C21CADFA-B61D-4B5D-9F37-4A31816984D1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataStoreFramework.AwsS3.Orchestration", "src\aws\DataStoreFramework.AwsS3.Orchestration\DataStoreFramework.AwsS3.Orchestration.csproj", "{C21CADFA-B61D-4B5D-9F37-4A31816984D1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
