@@ -351,3 +351,6 @@ MigrationBackup/
 
 # Auto-Generated JetBrains Annotation documentation file
 **/*.ExternalAnnotations.xml
+
+# Build generated Nuget packages
+_nupkgs/

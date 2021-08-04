@@ -3,8 +3,20 @@
 	<Import Project="base-project.props" />
 
 	<PropertyGroup>
-        <SignAssembly>true</SignAssembly>
+		<SignAssembly>true</SignAssembly>
 		<AssemblyOriginatorKeyFile>$(SolutionDir)Sidrat-DFS.snk</AssemblyOriginatorKeyFile>
+	</PropertyGroup>
+
+	<!-- Adding common Nuget Package settings -->
+	<PropertyGroup>
+		<IsPackable>true</IsPackable>
+		<PackageTags>Storage;StorageScalable;Sidrat</PackageTags>
+
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<PackageOutputPath>../../../_nupkgs</PackageOutputPath>
+		<IncludeSymbols>true</IncludeSymbols>
+		<SymbolPackageFormat>symbols.nupkg</SymbolPackageFormat>
+		<IncludeSource>true</IncludeSource>
 	</PropertyGroup>
 
 	<!-- Adding common Microsoft extension abstractions -->
