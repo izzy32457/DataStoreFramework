@@ -18,10 +18,15 @@ namespace DataStoreFramework.Orchestration
         }
 
         /// <summary>Adds a new data store provider to be managed.</summary>
+        /// <param name="providerDescriptor">The provider descriptor.</param>
+        public void AddDataStore(ProviderDescriptor providerDescriptor)
+            => _registeredProviders.Add(providerDescriptor);
+
+        /// <summary>Adds a new data store provider to be managed.</summary>
         /// <param name="dataStoreType">The type of the provider.</param>
         /// <param name="options">The options to create a provider instance.</param>
         public void AddDataStore(Type dataStoreType, ProviderOptions options)
-            => _registeredProviders.Add(ProviderDescriptor.Describe(dataStoreType, options));
+            => AddDataStore(ProviderDescriptor.Describe(dataStoreType, options));
 
         /// <summary>Creates an instance of <see cref="OrchestratorStaticConfigurationProvider"/>.</summary>
         /// <returns>A new instance of <see cref="OrchestratorStaticConfigurationProvider"/> containing the registered providers.</returns>

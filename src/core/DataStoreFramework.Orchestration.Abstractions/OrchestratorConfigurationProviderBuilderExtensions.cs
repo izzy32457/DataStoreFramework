@@ -4,7 +4,7 @@ using JetBrains.Annotations;
 
 namespace DataStoreFramework.Orchestration
 {
-    /// <summary>Acollection of configuration provider builder extensions.</summary>
+    /// <summary>A collection of configuration provider builder extensions.</summary>
     [PublicAPI]
     public static class OrchestratorConfigurationProviderBuilderExtensions
     {

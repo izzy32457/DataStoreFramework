@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using DataStoreFramework.Orchestration.Exceptions;
@@ -13,36 +14,55 @@ namespace DataStoreFramework.Orchestration
     {
         private readonly List<ProviderDescriptor> _providers;
 
+        private readonly ConcurrentDictionary<string, IDataStoreProvider> _providerInstances;
+
         /// <summary>Initializes a new instance of the <see cref="OrchestratorStaticConfigurationProvider"/> class.</summary>
         /// <param name="providers">A set of registered providers.</param>
         internal OrchestratorStaticConfigurationProvider([NotNull][ItemNotNull] IEnumerable<ProviderDescriptor> providers)
         {
             _providers = providers.ToList();
+            _providerInstances = new ();
         }
 
         /// <inheritdoc/>
         public IDataStoreProvider GetDataStoreByName(string name)
-        {
-            var provider = _providers.SingleOrDefault(p => p.Identifier == name);
-            if (provider is null)
-            {
-                throw new ProviderNotFoundException($"A provider was not found with the name '{name}'");
-            }
+            => _providerInstances.GetOrAdd(name, n =>
+                {
+                    var provider = _providers.SingleOrDefault(p => p.Identifier == n);
+                    if (provider is null)
+                    {
+                        throw new ProviderNotFoundException($"A provider was not found with the name '{n}'");
+                    }
 
-            // TODO: cache these created instances
-            return Activator.CreateInstance(provider.ProviderType, provider.Options) as IDataStoreProvider
-                   ?? throw new OrchestrationException($"Unable to create an instance of {provider.ProviderType.FullName}");
-        }
+                    return Activator.CreateInstance(provider.ProviderType, provider.Options) as IDataStoreProvider
+                           ?? throw new OrchestrationException(
+                               $"Unable to create an instance of {provider.ProviderType.FullName}");
+                });
 
         /// <inheritdoc/>
         public IDataStoreProvider GetDataStoreByObjectPath(string objectPath)
         {
             foreach (var descriptor in _providers)
             {
-                // TODO: detect if each provider can be generated from the objectPath
+                try
+                {
+                    if (Activator.CreateInstance(descriptor.ProviderType, descriptor.Options) is not IDataStoreProvider instance ||
+                        !instance.CanAccessObject(objectPath))
+                    {
+                        continue;
+                    }
+
+                    return _providerInstances.GetOrAdd(descriptor.Identifier, _ => instance);
+                }
+#pragma warning disable CA1031 // Do not catch general exception types
+                catch (Exception)
+#pragma warning restore CA1031 // Do not catch general exception types
+                {
+                    // do nothing
+                }
             }
 
-            throw new NotImplementedException();
+            throw new ProviderNotFoundException($"No provider was found for the object path '{objectPath}'.");
         }
     }
 }
