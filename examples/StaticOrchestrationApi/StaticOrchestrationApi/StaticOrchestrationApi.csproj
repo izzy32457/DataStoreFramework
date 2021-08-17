@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\src\aws\DataStoreFramework.AwsS3.Orchestration\DataStoreFramework.AwsS3.Orchestration.csproj" />
+    <ProjectReference Include="..\..\..\src\azure\DataStoreFramework.AzureBlob.Orchestration\DataStoreFramework.AzureBlob.Orchestration.csproj" />
     <ProjectReference Include="..\..\..\src\core\DataStoreFramework.Orchestration.Configuration.Static\DataStoreFramework.Orchestration.Configuration.Static.csproj" />
     <ProjectReference Include="..\..\..\src\core\DataStoreFramework.Orchestration\DataStoreFramework.Orchestration.csproj" />
   </ItemGroup>

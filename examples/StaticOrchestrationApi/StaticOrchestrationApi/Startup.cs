@@ -1,5 +1,7 @@
 using DataStoreFramework.AwsS3;
 using DataStoreFramework.AwsS3.Orchestration;
+using DataStoreFramework.AzureBlob;
+using DataStoreFramework.AzureBlob.Orchestration;
 using DataStoreFramework.Orchestration;
 using DataStoreFramework.Providers;
 using Microsoft.AspNetCore.Builder;
@@ -29,10 +31,18 @@ namespace StaticOrchestrationApi
                     builder => builder
                         .AddAwsS3DataStore(
                             opt => opt
+                                .WithName("aws-test-1")
                                 .UseRegion("eu-west-2")
                                 .SetMaxFilePartSize(5000)
                                 .ForcePathStyle()
                                 .UseServiceEndpoint("http://localhost:4566")
+                        )
+                        .AddAzureBlobDataStore(
+                            opt => opt
+                                .WithName("azure-test-1")
+                                .UseServiceEndpoint("...")
+                                .UseContainer("azure-test-container")
+                                .SetMaxFilePartSize(5000)
                         )
                     );
             });
