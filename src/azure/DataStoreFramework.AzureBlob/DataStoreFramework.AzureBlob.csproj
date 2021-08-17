@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<Import Project="..\..\patterns\shared-library.props" />
+
+	<ItemGroup>
+		<PackageReference Include="Azure.Storage.Blobs" Version="12.9.1" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\core\DataStoreFramework.Abstractions\DataStoreFramework.Abstractions.csproj" />
+	</ItemGroup>
+
+</Project>

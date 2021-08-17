@@ -1,0 +1,10 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<Import Project="..\..\patterns\shared-library.props" />
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\core\DataStoreFramework.Orchestration.Abstractions\DataStoreFramework.Orchestration.Abstractions.csproj" />
+		<ProjectReference Include="..\DataStoreFramework.AzureBlob\DataStoreFramework.AzureBlob.csproj" />
+	</ItemGroup>
+
+</Project>
