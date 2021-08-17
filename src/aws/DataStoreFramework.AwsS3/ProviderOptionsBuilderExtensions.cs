@@ -59,6 +59,31 @@ namespace DataStoreFramework.AwsS3
             return builder;
         }
 
+        /// <summary>Configures the required AWS Region.</summary>
+        /// <typeparam name="TOptionsBuilder">The specific type of the Aws S3 Provider Options Builder.</typeparam>
+        /// <param name="builder">The Provider Options Builder to configure the Region on.</param>
+        /// <param name="region">The AWS defined Region name.</param>
+        /// <returns>The passed in <paramref name="builder"/> with the Region set.</returns>
+        [NotNull]
+        public static TOptionsBuilder UseRegion<TOptionsBuilder>(
+            [NotNull] this TOptionsBuilder builder,
+            [NotNull] string region)
+            where TOptionsBuilder : IProviderOptionsBuilder<AwsS3ProviderOptions>
+        {
+            if (builder is null)
+            {
+                throw new ArgumentNullException(nameof(builder));
+            }
+
+            if (region is null)
+            {
+                throw new ArgumentNullException(nameof(region));
+            }
+
+            builder.SetOption(nameof(AwsS3ProviderOptions.Region), RegionEndpoint.GetBySystemName(region));
+            return builder;
+        }
+
         /// <summary>Configures the required Application Credentials.</summary>
         /// <typeparam name="TOptionsBuilder">The specific type of the Aws S3 Provider Options Builder.</typeparam>
         /// <param name="builder">The Provider Options Builder to configure the Region on.</param>
@@ -138,7 +163,7 @@ namespace DataStoreFramework.AwsS3
 
         /// <summary>Configures the Service Endpoint to be used.</summary>
         /// <typeparam name="TOptionsBuilder">The specific type of the Aws S3 Provider Options Builder.</typeparam>
-        /// <param name="builder">The Provider Options Builder to configure the Region on.</param>
+        /// <param name="builder">The Provider Options Builder to configure the Service Endpoint on.</param>
         /// <param name="serviceEndpoint">The endpoint URL for the AWS S3 service.</param>
         /// <returns>The passed in <paramref name="builder"/> with the Credentials set.</returns>
         /// <remarks>
@@ -156,6 +181,28 @@ namespace DataStoreFramework.AwsS3
             }
 
             builder.SetOption(nameof(AwsS3ProviderOptions.ServiceEndpoint), serviceEndpoint);
+            return builder;
+        }
+
+        /// <summary>Configures the Service Endpoint to use known localstack configuration.</summary>
+        /// <typeparam name="TOptionsBuilder">The specific type of the Aws S3 Provider Options Builder.</typeparam>
+        /// <param name="builder">The Provider Options Builder to configure the Service Endpoint on.</param>
+        /// <param name="serviceDomain">The domain that localstack is accessible from.</param>
+        /// <param name="servicePort">The port number that localstack is accessible on.</param>
+        /// <returns>The passed in <paramref name="builder"/> with the Credentials set.</returns>
+        public static TOptionsBuilder UseLocalstack<TOptionsBuilder>(
+            [NotNull] this TOptionsBuilder builder,
+            [NotNull] string serviceDomain = "localhost",
+            ushort servicePort = 4566)
+            where TOptionsBuilder : IProviderOptionsBuilder<AwsS3ProviderOptions>
+        {
+            if (builder is null)
+            {
+                throw new ArgumentNullException(nameof(builder));
+            }
+
+            builder.SetOption(nameof(AwsS3ProviderOptions.ServiceEndpoint), $"http://{serviceDomain}:{servicePort}/");
+            builder.SetOption(nameof(AwsS3ProviderOptions.ForcePathStyle), true);
             return builder;
         }
     }

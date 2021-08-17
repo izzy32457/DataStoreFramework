@@ -28,6 +28,13 @@ namespace DataStoreFramework.AwsS3
             init => SetOption(value: value);
         }
 
+        /// <summary>Gets the configured <see cref="RegionEndpoint.SystemName"/>.</summary>
+        public string RegionName
+        {
+            get => GetOption<RegionEndpoint>(nameof(Region)).SystemName;
+            init => SetOption(nameof(Region), RegionEndpoint.GetBySystemName(value));
+        }
+
         /// <summary>Gets the access key for service credentials.</summary>
         public string AccessKey
         {
