@@ -12,31 +12,6 @@ namespace DataStoreFramework.AwsS3
         /// <summary>Configures the required AWS Region.</summary>
         /// <typeparam name="TOptionsBuilder">The specific type of the Aws S3 Provider Options Builder.</typeparam>
         /// <param name="builder">The Provider Options Builder to configure the Region on.</param>
-        /// <param name="regionName">The AWS defined Region name.</param>
-        /// <returns>The passed in <paramref name="builder"/> with the Region set.</returns>
-        [NotNull]
-        public static TOptionsBuilder UseRegionName<TOptionsBuilder>(
-            [NotNull] this TOptionsBuilder builder,
-            [NotNull] string regionName)
-            where TOptionsBuilder : IProviderOptionsBuilder<AwsS3ProviderOptions>
-        {
-            if (builder is null)
-            {
-                throw new ArgumentNullException(nameof(builder));
-            }
-
-            if (regionName is null)
-            {
-                throw new ArgumentNullException(nameof(regionName));
-            }
-
-            builder.SetOption(nameof(AwsS3ProviderOptions.Region), RegionEndpoint.GetBySystemName(regionName));
-            return builder;
-        }
-
-        /// <summary>Configures the required AWS Region.</summary>
-        /// <typeparam name="TOptionsBuilder">The specific type of the Aws S3 Provider Options Builder.</typeparam>
-        /// <param name="builder">The Provider Options Builder to configure the Region on.</param>
         /// <param name="region">The AWS defined Region name.</param>
         /// <returns>The passed in <paramref name="builder"/> with the Region set.</returns>
         [NotNull]

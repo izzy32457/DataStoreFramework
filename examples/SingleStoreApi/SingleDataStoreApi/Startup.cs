@@ -25,7 +25,7 @@ namespace SingleDataStoreApi
             // configure AWS S3 Data Store
             services.AddAwsS3DataStore(
                 opt => opt
-                    .UseRegionName("eu-west-2")
+                    .UseRegion("eu-west-2")
                     .UseAppCredentials("AppKey", "SecretKey")
                     .SetMaxFilePartSize(5000)
                     .ForcePathStyle()
