@@ -1,4 +1,5 @@
 ﻿using System;
+using DataStoreFramework.Providers;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -32,7 +33,9 @@ namespace DataStoreFramework.Orchestration
             return services
                 .AddSingleton(builder.ConfigurationProvider)
                 .AddSingleton<DataStoreOrchestrator>()
+                .AddSingleton<OrchestratedDataStoreProvider>()
                 .AddSingleton<IDataStoreOrchestrator>(sp => sp.GetRequiredService<DataStoreOrchestrator>())
+                .AddSingleton<IDataStoreProvider>(sp => sp.GetRequiredService<OrchestratedDataStoreProvider>())
                 ;
         }
     }
