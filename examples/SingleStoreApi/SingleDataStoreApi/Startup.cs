@@ -1,4 +1,5 @@
 using DataStoreFramework.AwsS3;
+using DataStoreFramework.AzureBlob;
 using DataStoreFramework.Providers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -28,7 +29,14 @@ namespace SingleDataStoreApi
                     .UseAppCredentials("AppKey", "SecretKey")
                     .SetMaxFilePartSize(5000)
                     .ForcePathStyle()
-                );
+            );
+
+            //services.AddAzureBlobDataStore(
+            //    opt => opt
+            //        .UseServiceEndpoint("...")
+            //        .UseContainer("azure-test-container")
+            //        .SetMaxFilePartSize(5000)
+            //);
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
