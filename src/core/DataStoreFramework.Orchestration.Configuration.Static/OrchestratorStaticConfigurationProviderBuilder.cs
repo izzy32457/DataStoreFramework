@@ -15,15 +15,15 @@ namespace DataStoreFramework.Orchestration
             _registeredProviders = new ();
         }
 
-        /// <inheritdoc cref="IOrchestratorConfigurationProviderBuilder{OrchestratorStaticConfigurationProvider}.AddDataStore(ProviderDescriptor)"/>
+        /// <inheritdoc/>
         public void AddDataStore(ProviderDescriptor providerDescriptor)
             => _registeredProviders.Add(providerDescriptor);
 
-        /// <inheritdoc cref="IOrchestratorConfigurationProviderBuilder{OrchestratorStaticConfigurationProvider}.AddDataStoreRange(IEnumerable{ProviderDescriptor})"/>
+        /// <inheritdoc/>
         public void AddDataStoreRange(IEnumerable<ProviderDescriptor> providerDescriptors)
             => _registeredProviders.AddRange(providerDescriptors);
 
-        /// <inheritdoc cref="IOrchestratorConfigurationProviderBuilder{OrchestratorStaticConfigurationProvider}.Build()"/>
+        /// <inheritdoc/>
         public OrchestratorStaticConfigurationProvider Build()
             => new (_registeredProviders);
     }
