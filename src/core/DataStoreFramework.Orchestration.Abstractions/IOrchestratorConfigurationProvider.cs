@@ -1,4 +1,5 @@
-﻿using DataStoreFramework.Providers;
+﻿using System;
+using DataStoreFramework.Providers;
 using JetBrains.Annotations;
 
 namespace DataStoreFramework.Orchestration
@@ -9,16 +10,18 @@ namespace DataStoreFramework.Orchestration
     {
         /// <summary>Retrieves an instance of a registered provider by it's registered identifier.</summary>
         /// <param name="name">The name of the required provider.</param>
+        /// <param name="services">A collection of registered services.</param>
         /// <returns>An instance of the specified Data Store Provider.</returns>
         /// <exception cref="Exceptions.ProviderNotFoundException">Thrown if no provider is found with the specified <paramref name="name"/>.</exception>
         [NotNull]
-        IDataStoreProvider GetDataStoreByName([NotNull] string name);
+        IDataStoreProvider GetDataStoreByName([NotNull] string name, [NotNull] IServiceProvider services);
 
         /// <summary>Retrieves an instance of a registered provider by it's registered identifier.</summary>
         /// <param name="objectPath">The path for an object stored in the required provider.</param>
+        /// <param name="services">A collection of registered services.</param>
         /// <returns>An instance of the specified Data Store Provider.</returns>
         /// <exception cref="Exceptions.ProviderNotFoundException">Thrown if no provider is found that supports the specified <paramref name="objectPath"/>.</exception>
         [NotNull]
-        IDataStoreProvider GetDataStoreByObjectPath([NotNull] string objectPath);
+        IDataStoreProvider GetDataStoreByObjectPath([NotNull] string objectPath, [NotNull] IServiceProvider services);
     }
 }

@@ -5,6 +5,7 @@ using System.Linq;
 using DataStoreFramework.Orchestration.Exceptions;
 using DataStoreFramework.Providers;
 using JetBrains.Annotations;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace DataStoreFramework.Orchestration
 {
@@ -25,7 +26,7 @@ namespace DataStoreFramework.Orchestration
         }
 
         /// <inheritdoc/>
-        public IDataStoreProvider GetDataStoreByName(string name)
+        public IDataStoreProvider GetDataStoreByName(string name, IServiceProvider services)
             => _providerInstances.GetOrAdd(name, n =>
                 {
                     var provider = _providers.SingleOrDefault(p => p.Identifier == n);
@@ -34,19 +35,19 @@ namespace DataStoreFramework.Orchestration
                         throw new ProviderNotFoundException($"A provider was not found with the name '{n}'");
                     }
 
-                    return Activator.CreateInstance(provider.ProviderType, provider.Options) as IDataStoreProvider
+                    return ActivatorUtilities.CreateInstance(services, provider.ProviderType, provider.Options) as IDataStoreProvider
                            ?? throw new OrchestrationException(
                                $"Unable to create an instance of {provider.ProviderType.FullName}");
                 });
 
         /// <inheritdoc/>
-        public IDataStoreProvider GetDataStoreByObjectPath(string objectPath)
+        public IDataStoreProvider GetDataStoreByObjectPath(string objectPath, IServiceProvider services)
         {
             foreach (var descriptor in _providers)
             {
                 try
                 {
-                    if (Activator.CreateInstance(descriptor.ProviderType, descriptor.Options) is not IDataStoreProvider instance ||
+                    if (ActivatorUtilities.CreateInstance(services, descriptor.ProviderType, descriptor.Options) is not IDataStoreProvider instance ||
                         !instance.CanAccessObject(objectPath))
                     {
                         continue;

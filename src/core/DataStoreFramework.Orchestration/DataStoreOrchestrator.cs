@@ -21,30 +21,34 @@ namespace DataStoreFramework.Orchestration
 
         private readonly ILogger<DataStoreOrchestrator> _logger;
 
+        private readonly IServiceProvider _serviceProvider;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="DataStoreOrchestrator"/> class.
         /// </summary>
+        /// <param name="serviceProvider">A collection of registered services.</param>
         /// <param name="provider">A configuration provider for accessing registered Data Stores.</param>
         /// <param name="logger">A logger.</param>
-        internal DataStoreOrchestrator(IOrchestratorConfigurationProvider provider, ILogger<DataStoreOrchestrator> logger)
+        internal DataStoreOrchestrator(IServiceProvider serviceProvider, IOrchestratorConfigurationProvider provider, ILogger<DataStoreOrchestrator> logger)
         {
             _provider = provider;
             _logger = logger;
+            _serviceProvider = serviceProvider;
         }
 
         /// <inheritdoc/>
         public IDataStoreProvider GetProviderByName(string name)
-            => _provider.GetDataStoreByName(name);
+            => _provider.GetDataStoreByName(name, _serviceProvider);
 
         /// <inheritdoc/>
         public IDataStoreProvider GetProviderByObjectPath(string objectPath)
-            => _provider.GetDataStoreByObjectPath(objectPath);
+            => _provider.GetDataStoreByObjectPath(objectPath, _serviceProvider);
 
         /// <inheritdoc/>
         public void Copy(string sourceObjectPath, string destinationObjectPath)
         {
-            var srcProvider = _provider.GetDataStoreByObjectPath(sourceObjectPath);
-            var destProvider = _provider.GetDataStoreByObjectPath(destinationObjectPath);
+            var srcProvider = _provider.GetDataStoreByObjectPath(sourceObjectPath, _serviceProvider);
+            var destProvider = _provider.GetDataStoreByObjectPath(destinationObjectPath, _serviceProvider);
 
             if (srcProvider is null)
             {
@@ -80,7 +84,7 @@ namespace DataStoreFramework.Orchestration
         /// <inheritdoc/>
         public string StartChunkedWrite(string objectPath)
         {
-            var provider = _provider.GetDataStoreByObjectPath(objectPath);
+            var provider = _provider.GetDataStoreByObjectPath(objectPath, _serviceProvider);
 
             var chunkedUploadId = provider.StartChunkedWrite(objectPath);
 
