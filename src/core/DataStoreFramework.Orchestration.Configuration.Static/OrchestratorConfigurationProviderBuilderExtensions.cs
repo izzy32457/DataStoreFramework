@@ -14,14 +14,16 @@ namespace DataStoreFramework.Orchestration
         private static readonly Dictionary<string, Type> ProviderTypes = new ();
 
         /// <summary>Adds a Data Store Provider to the Data Store Orchestrator.</summary>
+        /// <typeparam name="TOrchestratorConfigurationProvider">The orchestrator configuration provider type the builder will create.</typeparam>
         /// <typeparam name="TDataStoreOptions">The type of the data store provider options.</typeparam>
         /// <param name="configurationBuilder">A Data Store Orchestrator configuration builder.</param>
         /// <param name="config">A configuration to retrieve values from.</param>
         /// <returns>The passed in <paramref name="configurationBuilder"/> with the Data Store Provider registered.</returns>
         [NotNull]
-        public static IOrchestratorConfigurationProviderBuilder FromConfiguration<TDataStoreOptions>(
-            [NotNull] this IOrchestratorConfigurationProviderBuilder configurationBuilder,
+        public static IOrchestratorConfigurationProviderBuilder<TOrchestratorConfigurationProvider> FromConfiguration<TOrchestratorConfigurationProvider, TDataStoreOptions>(
+            [NotNull] this IOrchestratorConfigurationProviderBuilder<TOrchestratorConfigurationProvider> configurationBuilder,
             [NotNull] IConfiguration config)
+            where TOrchestratorConfigurationProvider : IOrchestratorConfigurationProvider
             where TDataStoreOptions : ProviderOptions, new()
         {
             if (configurationBuilder is null)

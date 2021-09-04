@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using DataStoreFramework.Providers;
+﻿using System.Collections.Generic;
 using JetBrains.Annotations;
 
 namespace DataStoreFramework.Orchestration
 {
     /// <summary>A Data Store Configuration provider for creating Orchestrator instance.</summary>
     [PublicAPI]
-    public class OrchestratorStaticConfigurationProviderBuilder : IOrchestratorConfigurationProviderBuilder
+    public class OrchestratorStaticConfigurationProviderBuilder : IOrchestratorConfigurationProviderBuilder<OrchestratorStaticConfigurationProvider>
     {
         private readonly List<ProviderDescriptor> _registeredProviders;
 
@@ -17,20 +15,15 @@ namespace DataStoreFramework.Orchestration
             _registeredProviders = new ();
         }
 
-        /// <summary>Adds a new data store provider to be managed.</summary>
-        /// <param name="providerDescriptor">The provider descriptor.</param>
+        /// <inheritdoc cref="IOrchestratorConfigurationProviderBuilder{OrchestratorStaticConfigurationProvider}.AddDataStore(ProviderDescriptor)"/>
         public void AddDataStore(ProviderDescriptor providerDescriptor)
             => _registeredProviders.Add(providerDescriptor);
 
-        /// <summary>Adds a new data store provider to be managed.</summary>
-        /// <param name="dataStoreType">The type of the provider.</param>
-        /// <param name="options">The options to create a provider instance.</param>
-        public void AddDataStore(Type dataStoreType, ProviderOptions options)
-            => AddDataStore(ProviderDescriptor.Describe(dataStoreType, options));
+        /// <inheritdoc cref="IOrchestratorConfigurationProviderBuilder{OrchestratorStaticConfigurationProvider}.AddDataStoreRange(IEnumerable{ProviderDescriptor})"/>
+        public void AddDataStoreRange(IEnumerable<ProviderDescriptor> providerDescriptors)
+            => _registeredProviders.AddRange(providerDescriptors);
 
-        /// <summary>Creates an instance of <see cref="OrchestratorStaticConfigurationProvider"/>.</summary>
-        /// <returns>A new instance of <see cref="OrchestratorStaticConfigurationProvider"/> containing the registered providers.</returns>
-        [NotNull]
+        /// <inheritdoc cref="IOrchestratorConfigurationProviderBuilder{OrchestratorStaticConfigurationProvider}.Build()"/>
         public OrchestratorStaticConfigurationProvider Build()
             => new (_registeredProviders);
     }
