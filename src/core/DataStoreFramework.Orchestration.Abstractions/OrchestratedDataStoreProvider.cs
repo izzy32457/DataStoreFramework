@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 using DataStoreFramework.Data;
 using DataStoreFramework.Orchestration.Exceptions;
 using DataStoreFramework.Providers;
@@ -38,47 +40,47 @@ namespace DataStoreFramework.Orchestration
         }
 
         /// <inheritdoc/>
-        public void Copy(string sourceObjectPath, string destinationObjectPath)
-            => _dataStoreOrchestrator.Copy(sourceObjectPath, destinationObjectPath);
+        public Task CopyAsync(string sourceObjectPath, string destinationObjectPath, CancellationToken cancellationToken = default)
+            => _dataStoreOrchestrator.CopyAsync(sourceObjectPath, destinationObjectPath, cancellationToken);
 
         /// <inheritdoc/>
-        public void Delete(string objectPath, string versionId = null)
-            => _dataStoreOrchestrator.Delete(objectPath, versionId);
+        public Task DeleteAsync(string objectPath, string versionId = null, CancellationToken cancellationToken = default)
+            => _dataStoreOrchestrator.DeleteAsync(objectPath, versionId, cancellationToken: cancellationToken);
 
         /// <inheritdoc/>
-        public bool Exists(string objectPath)
-            => _dataStoreOrchestrator.Exists(objectPath);
+        public Task<bool> ExistsAsync(string objectPath, CancellationToken cancellationToken = default)
+            => _dataStoreOrchestrator.ExistsAsync(objectPath, cancellationToken);
 
         /// <inheritdoc/>
-        public ObjectMetadata GetMetadata(string objectPath)
-            => _dataStoreOrchestrator.GetMetadata(objectPath);
+        public Task<ObjectMetadata> GetMetadataAsync(string objectPath, CancellationToken cancellationToken = default)
+            => _dataStoreOrchestrator.GetMetadataAsync(objectPath, cancellationToken: cancellationToken);
 
         /// <inheritdoc/>
-        public void Move(string sourceObjectPath, string destinationObjectPath)
-            => _dataStoreOrchestrator.Move(sourceObjectPath, destinationObjectPath);
+        public Task MoveAsync(string sourceObjectPath, string destinationObjectPath, CancellationToken cancellationToken = default)
+            => _dataStoreOrchestrator.MoveAsync(sourceObjectPath, destinationObjectPath, cancellationToken);
 
         /// <inheritdoc/>
-        public Stream Read(string objectPath)
-            => _dataStoreOrchestrator.Read(objectPath);
+        public Task<Stream> ReadAsync(string objectPath, CancellationToken cancellationToken = default)
+            => _dataStoreOrchestrator.ReadAsync(objectPath, cancellationToken);
 
         /// <inheritdoc/>
-        public void Write(string objectPath, Stream data)
-            => _dataStoreOrchestrator.Write(objectPath, data);
+        public Task WriteAsync(string objectPath, Stream data, CancellationToken cancellationToken = default)
+            => _dataStoreOrchestrator.WriteAsync(objectPath, data, cancellationToken);
 
         /// <inheritdoc/>
-        public string StartChunkedWrite(string objectPath)
-            => _dataStoreOrchestrator.StartChunkedWrite(objectPath);
+        public Task<string> StartChunkedWriteAsync(string objectPath, CancellationToken cancellationToken = default)
+            => _dataStoreOrchestrator.StartChunkedWriteAsync(objectPath, cancellationToken);
 
         /// <inheritdoc/>
-        public string WriteChunk(string chunkedUploadId, Stream chunkData)
-            => _dataStoreOrchestrator.WriteChunk(chunkedUploadId, chunkData);
+        public Task<string> WriteChunkAsync(string chunkedUploadId, Stream chunkData, CancellationToken cancellationToken = default)
+            => _dataStoreOrchestrator.WriteChunkAsync(chunkedUploadId, chunkData, cancellationToken);
 
         /// <inheritdoc/>
-        public void EndChunkedWrite(string chunkedUploadId, [InstantHandle] IEnumerable<ChunkDetail> chunkDetails)
-            => _dataStoreOrchestrator.EndChunkedWrite(chunkedUploadId, chunkDetails);
+        public Task EndChunkedWriteAsync(string chunkedUploadId, [InstantHandle] IEnumerable<ChunkDetail> chunkDetails, CancellationToken cancellationToken = default)
+            => _dataStoreOrchestrator.EndChunkedWriteAsync(chunkedUploadId, chunkDetails, cancellationToken);
 
         /// <inheritdoc/>
-        public void CancelChunkedWrite(string chunkedUploadId)
-            => _dataStoreOrchestrator.CancelChunkedWrite(chunkedUploadId);
+        public Task CancelChunkedWriteAsync(string chunkedUploadId, CancellationToken cancellationToken = default)
+            => _dataStoreOrchestrator.CancelChunkedWriteAsync(chunkedUploadId, cancellationToken);
     }
 }

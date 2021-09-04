@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 using DataStoreFramework.Data;
 using DataStoreFramework.Providers;
 using JetBrains.Annotations;
@@ -41,67 +43,67 @@ namespace DataStoreFramework.AzureBlob
         }
 
         /// <inheritdoc/>
-        public void CancelChunkedWrite(string chunkedUploadId)
+        public Task CancelChunkedWriteAsync(string chunkedUploadId, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public void Copy(string sourceObjectPath, string destinationObjectPath)
+        public Task CopyAsync(string sourceObjectPath, string destinationObjectPath, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public void Delete(string objectPath, string versionId = null)
+        public Task DeleteAsync(string objectPath, string versionId = null, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public void EndChunkedWrite(string chunkedUploadId, [InstantHandle] IEnumerable<ChunkDetail> chunkDetails)
+        public Task EndChunkedWriteAsync(string chunkedUploadId, [InstantHandle] IEnumerable<ChunkDetail> chunkDetails, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public bool Exists(string objectPath)
+        public Task<bool> ExistsAsync(string objectPath, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public ObjectMetadata GetMetadata(string objectPath)
+        public Task<ObjectMetadata> GetMetadataAsync(string objectPath, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public void Move(string sourceObjectPath, string destinationObjectPath)
+        public Task MoveAsync(string sourceObjectPath, string destinationObjectPath, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public Stream Read(string objectPath)
+        public Task<Stream> ReadAsync(string objectPath, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public string StartChunkedWrite(string objectPath)
+        public Task<string> StartChunkedWriteAsync(string objectPath, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public void Write(string objectPath, Stream data)
+        public Task WriteAsync(string objectPath, Stream data, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public string WriteChunk(string chunkedUploadId, Stream chunkData)
+        public Task<string> WriteChunkAsync(string chunkedUploadId, Stream chunkData, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }

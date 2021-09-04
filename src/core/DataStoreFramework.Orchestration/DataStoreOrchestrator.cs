@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
+using System.Threading.Tasks;
 using DataStoreFramework.Data;
 using DataStoreFramework.Orchestration.Exceptions;
 using DataStoreFramework.Providers;
@@ -45,7 +46,7 @@ namespace DataStoreFramework.Orchestration
             => _provider.GetDataStoreByObjectPath(objectPath, _serviceProvider);
 
         /// <inheritdoc/>
-        public void Copy(string sourceObjectPath, string destinationObjectPath)
+        public async Task CopyAsync(string sourceObjectPath, string destinationObjectPath, CancellationToken cancellationToken = default)
         {
             var srcProvider = _provider.GetDataStoreByObjectPath(sourceObjectPath, _serviceProvider);
             var destProvider = _provider.GetDataStoreByObjectPath(destinationObjectPath, _serviceProvider);
@@ -60,44 +61,73 @@ namespace DataStoreFramework.Orchestration
                 throw new ProviderNotFoundException($"Unable to locate a Data Store Provider for '{destinationObjectPath}'");
             }
 
-            // ReSharper disable once ConditionIsAlwaysTrueOrFalse - TODO: need to test if this is actually the case. It should not be true.
-            if (ReferenceEquals(srcProvider, destinationObjectPath))
+            if (ReferenceEquals(srcProvider, destProvider))
             {
-                srcProvider.Copy(sourceObjectPath, destinationObjectPath);
+                await srcProvider.CopyAsync(sourceObjectPath, destinationObjectPath, cancellationToken).ConfigureAwait(false);
+#pragma warning disable SA1513 // Closing brace should be followed by blank line
             }
-
-            if (srcProvider.Type == destProvider.Type)
+            //else if (srcProvider.Type == destProvider.Type)
+            //{
+            //    // TODO: How could we implement copy across accounts / buckets but within the same provider natively
+            //}
+            else
+#pragma warning restore SA1513 // Closing brace should be followed by blank line
             {
-                // TODO: How could we implement copy across accounts / buckets but within the same provider natively
+                await using var stream = await srcProvider.ReadAsync(sourceObjectPath, cancellationToken).ConfigureAwait(false);
+                await destProvider.WriteAsync(destinationObjectPath, stream, cancellationToken).ConfigureAwait(false);
             }
-
-            using var stream = srcProvider.Read(sourceObjectPath);
-            destProvider.Write(destinationObjectPath, stream);
         }
 
         /// <inheritdoc/>
-        public void Move(string sourceObjectPath, string destinationObjectPath)
+        public async Task MoveAsync(string sourceObjectPath, string destinationObjectPath, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            var srcProvider = _provider.GetDataStoreByObjectPath(sourceObjectPath, _serviceProvider);
+            var destProvider = _provider.GetDataStoreByObjectPath(destinationObjectPath, _serviceProvider);
+
+            if (srcProvider is null)
+            {
+                throw new ProviderNotFoundException($"Unable to locate a Data Store Provider for '{sourceObjectPath}'");
+            }
+
+            if (destProvider is null)
+            {
+                throw new ProviderNotFoundException($"Unable to locate a Data Store Provider for '{destinationObjectPath}'");
+            }
+
+            if (ReferenceEquals(srcProvider, destProvider))
+            {
+                await srcProvider.MoveAsync(sourceObjectPath, destinationObjectPath, cancellationToken).ConfigureAwait(false);
+#pragma warning disable SA1513 // Closing brace should be followed by blank line
+            }
+            //else if (srcProvider.Type == destProvider.Type)
+            //{
+            //    // TODO: How could we implement copy across accounts / buckets but within the same provider natively
+            //}
+            else
+#pragma warning restore SA1513 // Closing brace should be followed by blank line
+            {
+                throw new NotImplementedException();
+            }
         }
 
         /// <inheritdoc/>
-        public string StartChunkedWrite(string objectPath)
+        public async Task<string> StartChunkedWriteAsync(string objectPath, CancellationToken cancellationToken = default)
         {
             var provider = _provider.GetDataStoreByObjectPath(objectPath, _serviceProvider);
 
-            var chunkedUploadId = provider.StartChunkedWrite(objectPath);
+            var chunkedUploadId = await provider.StartChunkedWriteAsync(objectPath, cancellationToken).ConfigureAwait(false);
 
+            // TODO: should this have limited retry count???
             while (!ChunkedUploadsMap.TryAdd(chunkedUploadId, provider))
             {
-                Thread.Sleep(10);
+                await Task.Delay(TimeSpan.FromMilliseconds(100), cancellationToken).ConfigureAwait(false);
             }
 
             return chunkedUploadId;
         }
 
         /// <inheritdoc/>
-        public string WriteChunk(string chunkedUploadId, Stream chunkData)
+        public Task<string> WriteChunkAsync(string chunkedUploadId, Stream chunkData, CancellationToken cancellationToken = default)
         {
             // ReSharper disable once InvertIf - Makes no difference to code structure
             if (!ChunkedUploadsMap.TryGetValue(chunkedUploadId, out var provider) || provider is null)
@@ -107,11 +137,11 @@ namespace DataStoreFramework.Orchestration
                     $"No provider was found for the chunked upload with id '{chunkedUploadId}'");
             }
 
-            return provider.WriteChunk(chunkedUploadId, chunkData);
+            return provider.WriteChunkAsync(chunkedUploadId, chunkData, cancellationToken);
         }
 
         /// <inheritdoc/>
-        public void CancelChunkedWrite(string chunkedUploadId)
+        public async Task CancelChunkedWriteAsync(string chunkedUploadId, CancellationToken cancellationToken = default)
         {
             if (!ChunkedUploadsMap.TryGetValue(chunkedUploadId, out var provider) || provider is null)
             {
@@ -120,21 +150,21 @@ namespace DataStoreFramework.Orchestration
                     $"No provider was found for the chunked upload with id '{chunkedUploadId}'");
             }
 
-            provider.CancelChunkedWrite(chunkedUploadId);
+            await provider.CancelChunkedWriteAsync(chunkedUploadId, cancellationToken).ConfigureAwait(false);
 
             while (!ChunkedUploadsMap.TryUpdate(chunkedUploadId, null, provider))
             {
-                Thread.Sleep(10);
+                await Task.Delay(TimeSpan.FromMilliseconds(100), cancellationToken).ConfigureAwait(false);
             }
 
             while (!ChunkedUploadsMap.TryRemove(chunkedUploadId, out _))
             {
-                Thread.Sleep(10);
+                await Task.Delay(TimeSpan.FromMilliseconds(100), cancellationToken).ConfigureAwait(false);
             }
         }
 
         /// <inheritdoc/>
-        public void EndChunkedWrite(string chunkedUploadId, [InstantHandle] IEnumerable<ChunkDetail> chunkDetails)
+        public async Task EndChunkedWriteAsync(string chunkedUploadId, [InstantHandle] IEnumerable<ChunkDetail> chunkDetails, CancellationToken cancellationToken = default)
         {
             if (!ChunkedUploadsMap.TryGetValue(chunkedUploadId, out var provider) || provider is null)
             {
@@ -143,16 +173,16 @@ namespace DataStoreFramework.Orchestration
                     $"No provider was found for the chunked upload with id '{chunkedUploadId}'");
             }
 
-            provider.EndChunkedWrite(chunkedUploadId, chunkDetails);
+            await provider.EndChunkedWriteAsync(chunkedUploadId, chunkDetails, cancellationToken).ConfigureAwait(false);
 
             while (!ChunkedUploadsMap.TryUpdate(chunkedUploadId, null, provider))
             {
-                Thread.Sleep(10);
+                await Task.Delay(TimeSpan.FromMilliseconds(100), cancellationToken).ConfigureAwait(false);
             }
 
             while (!ChunkedUploadsMap.TryRemove(chunkedUploadId, out _))
             {
-                Thread.Sleep(10);
+                await Task.Delay(TimeSpan.FromMilliseconds(100), cancellationToken).ConfigureAwait(false);
             }
         }
     }

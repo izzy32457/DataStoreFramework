@@ -10,7 +10,7 @@ namespace DataStoreFramework.Data
     public class ChunkDetail
     {
         /// <summary>Gets the identifier of the data object part uploaded.</summary>
-        /// <remarks>This is provided by a call to <see cref="Providers.IDataStoreProvider.WriteChunk(string,System.IO.Stream)"/>.</remarks>
+        /// <remarks>This is provided by a call to <see cref="Providers.IDataStoreProvider.WriteChunkAsync(string,System.IO.Stream,System.Threading.CancellationToken)"/>.</remarks>
         [NotNull]
         [Required]
         public string Id { get; init; } = null!;

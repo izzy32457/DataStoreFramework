@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using DataStoreFramework.Data;
 using DataStoreFramework.Providers;
@@ -20,11 +21,11 @@ namespace SingleDataStoreApi.Controllers
         }
 
         [HttpGet("{id}/metadata")]
-        public ObjectMetadata Get(string id)
+        public async Task<ObjectMetadata> Get(string id)
         {
             _logger.LogDebug($"Retrieving metadata for: {id}");
 
-            return _dataStore.GetMetadata(id);
+            return await _dataStore.GetMetadataAsync(id, HttpContext.RequestAborted);
         }
     }
 }
