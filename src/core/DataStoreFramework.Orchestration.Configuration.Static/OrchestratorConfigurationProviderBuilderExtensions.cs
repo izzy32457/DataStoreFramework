@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using DataStoreFramework.Exceptions;
 using DataStoreFramework.Providers;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Configuration;
@@ -35,7 +36,7 @@ namespace DataStoreFramework.Orchestration
             {
                 var providerType = GetProviderTypeByName(storeConfiguration.FullyQualifiedTypeName);
                 var options = Activator.CreateInstance(typeof(TDataStoreOptions), storeConfiguration.Options) as TDataStoreOptions
-                              ?? throw new InvalidOperationException("Unable to map options for ");
+                              ?? throw new ConfigurationException($"Unable to map options for {storeConfiguration.FullyQualifiedTypeName}");
 
                 configurationBuilder.AddDataStore(providerType, options);
             }
